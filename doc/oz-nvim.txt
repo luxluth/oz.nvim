@@ -4,6 +4,11 @@
 Table of Contents                                  *oz-nvim-table-of-contents*
 
 1. oz.nvim                                                   |oz-nvim-oz.nvim|
+  - Configuration                              |oz-nvim-oz.nvim-configuration|
+  - Commands                                        |oz-nvim-oz.nvim-commands|
+  - Dependencies                                |oz-nvim-oz.nvim-dependencies|
+  - TODOs                                              |oz-nvim-oz.nvim-todos|
+  - Contributing                                |oz-nvim-oz.nvim-contributing|
 2. Links                                                       |oz-nvim-links|
 
 ==============================================================================
@@ -12,6 +17,56 @@ Table of Contents                                  *oz-nvim-table-of-contents*
 
 
 A neovim plugin for the oz programming language
+
+
+  It’s not a complete implementation but it can do the job for now
+
+CONFIGURATION                                  *oz-nvim-oz.nvim-configuration*
+
+Default configuration options
+
+>lua
+    opts = {
+      ozengine_path = "ozengine",
+      show_compiler_output = true,
+      linter = false,
+      keymaps = {
+        feed_selection_mapping = "<C-r>",
+      },
+    }
+<
+
+
+COMMANDS                                            *oz-nvim-oz.nvim-commands*
+
+Some available commands:
+
+- `OzEnginePath` to get the current ozengine path
+- `OzFeedFile` to feed the current oz buffer to the engine
+- `OzEngineRestart` to restart the engine
+
+
+DEPENDENCIES                                    *oz-nvim-oz.nvim-dependencies*
+
+The plugin depends on the `socat` command to the ozengine. The plugin is only
+tested on linux for the moment.
+
+
+TODOS                                                  *oz-nvim-oz.nvim-todos*
+
+- simple connection to the ozengine
+- code feeding
+- linting
+- compiler output into a different buffer
+- more platform support
+
+
+CONTRIBUTING                                    *oz-nvim-oz.nvim-contributing*
+
+Feel free to send a pr.
+
+------------------------------------------------------------------------------
+Licence: MIT
 
 ==============================================================================
 2. Links                                                       *oz-nvim-links*
