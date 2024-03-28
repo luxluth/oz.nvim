@@ -57,12 +57,15 @@ function LogBuf:open_log()
     self.buf.nr = vim.api.nvim_create_buf(true, false)
     vim.api.nvim_buf_set_name(self.buf.nr, "[oz.nvim::Logger]")
     self.buf.open = true
+    self:sync_lines()
   end
 end
 
 function LogBuf:close_log()
   if self.buf.open ~= false then
     if self.buf.nr ~= nil then
+      local win_id = vim.fn.bufwinid(self.buf.nr)
+      vim.api.nvim_win_close(win_id, true)
       vim.api.nvim_buf_delete(self.buf.nr, { force = true })
     end
     self.buf.nr = nil
