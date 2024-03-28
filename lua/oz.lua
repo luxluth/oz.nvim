@@ -7,7 +7,9 @@ local opts = {
   ozengine_path = "ozengine",
   show_compiler_output = true,
   linter = false,
-  keymap = "<C-r>",
+  keymaps = {
+    feed_selection_mapping = "<C-r>",
+  },
 }
 
 ---@class OzNvim
@@ -47,7 +49,12 @@ function M.feed_file(bufnr)
   end
 
   local file_name = vim.api.nvim_buf_get_name(bufnr)
-  vim.notify(get_buffer_text(bufnr), vim.log.levels.INFO)
+  engine.send({
+    character = 0,
+    line = 0,
+    filename = file_name,
+    data = get_buffer_text(bufnr),
+  })
 end
 
 ---Feed a selection into the engine
@@ -63,8 +70,13 @@ function M.feed_selection(bufnr)
 
   local selected_text = table.concat(utils.get_visual(bufnr), "\n")
 
-  vim.notify(selected_text, vim.log.levels.INFO, {})
   local file_name = vim.api.nvim_buf_get_name(bufnr)
+  engine.send({
+    character = 0,
+    line = 0,
+    filename = file_name,
+    data = selected_text,
+  })
 end
 
 ---Start the ozengine server

@@ -1,3 +1,0 @@
-- [ ] Oz engine detection
-- [ ] Spin up the virtual machine (feed line, region, file, paragraph)
-- [ ] Linter, LSP ?

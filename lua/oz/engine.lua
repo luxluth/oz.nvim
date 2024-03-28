@@ -33,10 +33,10 @@ function EC:spinsup_compiler(port)
 
   if self.compiler.pid > 0 then
     self.compiler.active = true
-    return
+  else
+    vim.notify("Unable to connect to the ozengine by TCP", vim.log.levels.WARN, { title = "oz.nvim" })
+    self.compiler.active = false
   end
-
-  vim.notify("Unable to connect to the ozengine by TCP", vim.log.levels.WARN, { title = "oz.nvim" })
 end
 
 ---Start the ozengine server
@@ -65,30 +65,68 @@ function EC:start(instance)
       end,
     })
 
-    vim.notify("ozengine has been started...", vim.log.levels.INFO, { title = "oz.nvim" })
+    if self.server.pid > 0 then
+      vim.notify("ozengine has been started...", vim.log.levels.INFO, { title = "oz.nvim" })
+    else
+      vim.notify(
+        "Unable to start the ozengine with the path " .. instance.opts.ozengine_path,
+        vim.log.levels.ERROR,
+        { title = "oz.nvim" }
+      )
+      self.server.active = false
+    end
   end
 end
 -- ozengine x-oz://system/OPI.ozf
 
 ---Shutdown the ozengine server
 function EC:shutdown()
-  if self.server.pid ~= nil then
-    vim.fn.jobstop(self.server.pid)
-    self.server.pid = nil
-    self.server.active = false
-  end
-  if self.compiler.pid ~= nil then
+  if self.compiler.active then
+    self:send({
+      character = 0,
+      data = "{Application.exit 0}",
+      filename = "",
+      line = 0,
+    })
     vim.fn.jobstop(self.compiler.pid)
     self.compiler.pid = nil
     self.compiler.active = false
   end
+
+  if self.server.active then
+    vim.fn.jobstop(self.server.pid)
+    self.server.pid = nil
+    self.server.active = false
+  end
 end
 
----@param str string[]
-function EC:send(str)
+---@class CompilerMessage
+---@field character number
+---@field data string
+---@field filename string
+---@field line number
+
+---@param message CompilerMessage
+function EC:send(message)
   if self.compiler.active then
-    vim.fn.chansend(self.compiler.pid, str)
+    vim.fn.chansend(
+      self.compiler.pid,
+      message.data
+        .. "\n%%oz-nvim:linter:filename:"
+        .. message.filename
+        .. ":line:"
+        .. message.line
+        .. ":char:"
+        .. message.character
+        .. "\n\x04\n"
+    )
   end
+end
+
+---Send code to the engine
+---@param message CompilerMessage
+M.send = function(message)
+  EC:send(message)
 end
 
 M.path = function(path)
