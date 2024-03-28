@@ -21,13 +21,13 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
       oz.open_log()
     end, {})
 
-    vim.api.nvim_create_user_command("OzCloseLog", function()
-      oz.open_log()
-    end, {})
-
-    vim.api.nvim_create_user_command("OzToggleLog", function()
-      oz.toogle_log()
-    end, {})
+    -- TODO: fix those
+    -- vim.api.nvim_create_user_command("OzCloseLog", function()
+    --   oz.open_log()
+    -- end, {})
+    -- vim.api.nvim_create_user_command("OzToggleLog", function()
+    --   oz.toogle_log()
+    -- end, {})
 
     vim.keymap.set("v", oz.opts.keymaps.feed_selection_mapping, function()
       oz.feed_selection(args.buf)
