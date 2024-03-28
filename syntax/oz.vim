@@ -1,8 +1,5 @@
 " Vim syntax file
 " Language:    Oz/Mozart (www.mozart-oz.org)
-" Maintainer:  Michael Neumann <mneumann@fantasy-coders.de>
-" Contributer: Stijn Seghers <stijnseghers at gmail.com>
-" Last Change: 2014 Apr 17
 
 if exists("b:current_syntax")
   finish
@@ -66,6 +63,9 @@ syn region ozString start=+L\="+ skip=+\\\\\|\\"+ end=+"+
 syn region ozString start=+L\='+ skip=+\\\\\|\\'+ end=+'+
 
 syn match ozNumber "[0-9][0-9]*\(\.[0-9][0-9]*\)\?"
+syn match ozNumber "0b[0-1]*"
+syn match ozNumber "0x[A-Z-a-z]*"
+syn match ozNumber "[0-9]\.E[0-9]*"
 
 syn sync fromstart
 
