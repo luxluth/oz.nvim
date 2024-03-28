@@ -18,20 +18,25 @@ local EC = {
 ---@param port string
 function EC:spinsup_compiler(port)
   local command = { "socat", "-", string.format("TCP:localhost:%s", port) }
-  vim.notify(string.format("TCP:localhost:%s", port), vim.log.levels.WARN, { title = "oz.nvim" })
+  -- vim.notify(string.format("TCP:localhost:%s", port), vim.log.levels.WARN, { title = "oz.nvim" })
 
   self.compiler.pid = vim.fn.jobstart(command, {
     ---@param data string
     on_stdout = function(_, data, _) end,
     on_stderr = function(_, data, _)
-      vim.notify(data, vim.log.levels.WARN, { title = "oz.nvim" })
+      vim.notify(table.concat(data, "\n"), vim.log.levels.WARN, { title = "oz.nvim" })
     end,
     on_exit = function(_, _, _)
-      vim.notify(command .. " " .. "has exited", vim.log.levels.WARN, { title = "oz.nvim" })
+      vim.notify(table.concat(command, " ") .. " " .. "has exited", vim.log.levels.WARN, { title = "oz.nvim" })
     end,
   })
 
-  self.compiler.active = true
+  if self.compiler.pid > 0 then
+    self.compiler.active = true
+    return
+  end
+
+  vim.notify("Unable to connect to the ozengine by TCP", vim.log.levels.WARN, { title = "oz.nvim" })
 end
 
 ---Start the ozengine server
@@ -40,26 +45,26 @@ function EC:start(instance)
   local command = { instance.opts.ozengine_path, "x-oz://system/OPI.ozf" }
   if self.server.pid == nil then
     self.server.pid = vim.fn.jobstart(command, {
-      ---@param data string
-      on_data = function(_, data, _)
+      ---@param data string[]
+      on_stdout = function(id, data, event)
         -- check for socket if not connected yet
         if self.server.active == false then
-          local server_port, _debug_port = data:match("'oz%-socket (%d+) (%d+)'")
-          vim.notify(server_port, vim.log.levels.INFO, { title = "oz.nvim" })
+          local server_port, debug_port = string.match(table.concat(data, "\n"), "'oz%-socket (%d+) (%d+)'")
+          -- vim.notify(server_port, vim.log.levels.INFO, { title = "oz.nvim" })
           if self.compiler.active == false then
             self.spinsup_compiler(self, server_port)
           end
+          self.server.active = true
         end
       end,
-      on_stderr = function(_, data, _)
-        vim.notify(data, vim.log.levels.TRACE, { title = "oz.nvim" })
+      on_stderr = function(id, data, event)
+        -- vim.notify(data, vim.log.levels.TRACE, { title = "oz.nvim" })
       end,
       on_exit = function(_, _, _)
-        vim.notify(command .. " " .. "has exited", vim.log.levels.WARN, { title = "oz.nvim" })
+        vim.notify(table.concat(command, " ") .. " " .. "has exited", vim.log.levels.WARN, { title = "oz.nvim" })
       end,
     })
 
-    self.server.active = true
     vim.notify("ozengine has been started...", vim.log.levels.INFO, { title = "oz.nvim" })
   end
 end
