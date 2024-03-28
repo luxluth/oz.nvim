@@ -1,3 +1,5 @@
+local LogBuf = require("oz.log")
+
 ---@class OzEngine
 local M = {}
 
@@ -18,11 +20,12 @@ local EC = {
 ---@param port string
 function EC:spinsup_compiler(port)
   local command = { "socat", "-", string.format("TCP:localhost:%s", port) }
-  -- vim.notify(string.format("TCP:localhost:%s", port), vim.log.levels.WARN, { title = "oz.nvim" })
 
   self.compiler.pid = vim.fn.jobstart(command, {
-    ---@param data string
-    on_stdout = function(_, data, _) end,
+    ---@param data string[]
+    on_stdout = function(_, data, _)
+      LogBuf:push(data)
+    end,
     on_stderr = function(_, data, _)
       vim.notify(table.concat(data, "\n"), vim.log.levels.WARN, { title = "oz.nvim" })
     end,
@@ -149,6 +152,18 @@ end
 function M.restart(instance)
   EC:shutdown()
   EC:start(instance)
+end
+
+function M.openlogs()
+  LogBuf:open_log()
+end
+
+function M.closelogs()
+  LogBuf:close_log()
+end
+
+function M.tooglelogs()
+  LogBuf:toogle_log()
 end
 
 return M

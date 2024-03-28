@@ -19,8 +19,6 @@ local M = {}
 M.opts = opts
 
 ---@param args Options?
--- you can define your setup function here. Usually configurations can be merged, accepting outside params and
--- you can also put some validation here for those.
 function M.setup(args)
   M.opts = vim.tbl_deep_extend("force", M.opts, args or {})
 end
@@ -92,6 +90,19 @@ end
 ---Restart the ozengine server
 function M.restart_engine()
   engine.restart(M)
+end
+
+----- LOGS
+function M.open_log()
+  engine.openlogs()
+end
+
+function M.close_log()
+  engine.closelogs()
+end
+
+function M.toogle_log()
+  engine.tooglelogs()
 end
 
 return M
