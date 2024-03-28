@@ -44,6 +44,7 @@ Some available commands:
 - `OzEnginePath` to get the current ozengine path
 - `OzFeedFile` to feed the current oz buffer to the engine
 - `OzEngineRestart` to restart the engine
+- `OzOpenLog` to see the logs
 
 
 DEPENDENCIES                                    *oz-nvim-oz.nvim-dependencies*
@@ -65,9 +66,9 @@ TODOS                                                  *oz-nvim-oz.nvim-todos*
 
 - simple connection to the ozengine
 - code feeding
-- linting
 - compiler output into a different buffer
-- more platform support
+- linting
+- more platform support (windows ?)
 
 
 CONTRIBUTING                                    *oz-nvim-oz.nvim-contributing*
