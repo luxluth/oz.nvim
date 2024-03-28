@@ -1,9 +1,10 @@
-*oz.nvim-docs.txt*        For Neovim >= 0.8.0       Last change: 2024 March 21
+*oz.nvim-docs.txt*        For Neovim >= 0.8.0       Last change: 2024 March 28
 
 ==============================================================================
 Table of Contents                             *oz.nvim-docs-table-of-contents*
 
 1. oz.nvim                                              |oz.nvim-docs-oz.nvim|
+2. Links                                                  |oz.nvim-docs-links|
 
 ==============================================================================
 1. oz.nvim                                              *oz.nvim-docs-oz.nvim*
