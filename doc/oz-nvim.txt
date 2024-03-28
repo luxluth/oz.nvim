@@ -48,9 +48,18 @@ Some available commands:
 
 DEPENDENCIES                                    *oz-nvim-oz.nvim-dependencies*
 
-The plugin depends on the `socat` command to send code to the ozengine. The
-plugin is only tested on linux for the moment.
+The plugin depends on the `socat` command to send code to the ozengine. It’s
+available on all major distros see here <https://pkgs.org/download/socat>
 
+On macOS, `socat` can be installed with brew
+<https://formulae.brew.sh/formula/socat>
+
+>zsh
+    brew install socat
+<
+
+
+  Theplugin is only tested on linux for the moment.
 
 TODOS                                                  *oz-nvim-oz.nvim-todos*
 
