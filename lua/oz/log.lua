@@ -1,26 +1,35 @@
 ---@class LogBuffer
 local LogBuf = {
-  ---@type integer
-  nr = vim.api.nvim_create_buf(true, false),
   ---@type string[]
   content = {},
   ---@type number
   max_content_lines = 500,
-  win = {
+  buf = {
+    ---@type integer
+    nr = nil,
     open = false,
-    ---@type number
-    id = nil,
   },
 }
 
 function LogBuf:clear_buf()
-  vim.api.nvim_buf_set_lines(self.nr, 0, -1, false, {})
+  if self.buf.nr ~= nil then
+    vim.api.nvim_buf_set_lines(self.buf.nr, 0, -1, false, {})
+  end
 end
 
 ---@param lines string[]
 function LogBuf:set_buf_lines(lines)
   self:clear_buf()
-  vim.api.nvim_buf_set_lines(self.nr, 0, -1, false, lines)
+  if self.buf.nr ~= nil then
+    vim.api.nvim_buf_set_lines(self.buf.nr, 0, -1, false, lines)
+  end
+end
+
+function LogBuf:sync_lines()
+  self:clear_buf()
+  if self.buf.nr ~= nil then
+    vim.api.nvim_buf_set_lines(self.buf.nr, 0, -1, false, self.content)
+  end
 end
 
 ---@param lines string[]
@@ -44,26 +53,25 @@ function LogBuf:push(lines)
 end
 
 function LogBuf:open_log()
-  if self.win.open ~= true then
-    self.win.id = vim.api.nvim_open_win(self.nr, false, {
-      split = "left",
-      title = "[oz.nvim::Logger]",
-      anchor = "SW",
-    })
-    self.win.open = true
+  if self.buf.open ~= true then
+    self.buf.nr = vim.api.nvim_create_buf(true, false)
+    vim.api.nvim_buf_set_name(self.buf.nr, "[oz.nvim::Logger]")
+    self.buf.open = true
   end
 end
 
 function LogBuf:close_log()
-  if self.win.open ~= false then
-    vim.api.nvim_win_close(self.win.id, true)
-    self.win.id = nil
-    self.win.open = false
+  if self.buf.open ~= false then
+    if self.buf.nr ~= nil then
+      vim.api.nvim_buf_delete(self.buf.nr, { force = true })
+    end
+    self.buf.nr = nil
+    self.buf.open = false
   end
 end
 
 function LogBuf:toogle_log()
-  if self.win.open then
+  if self.buf.open then
     self:close_log()
   else
     self:open_log()
