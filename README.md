@@ -29,13 +29,15 @@ Some available commands:
 - `OzEnginePath` to get the current ozengine path
 - `OzFeedFile` to feed the current oz buffer to the engine
 - `OzEngineRestart` to restart the engine
+- `OzOpenLog` to see the logs
 
 ## Dependencies
 
-The plugin depends on the `socat` command to send code to the ozengine. 
+The plugin depends on the `socat` command to send code to the ozengine.
 It's available on all major distros see [here](https://pkgs.org/download/socat)
 
 On macOS, `socat` can be installed with [brew](https://formulae.brew.sh/formula/socat):
+
 ```zsh
 brew install socat
 ```
@@ -46,9 +48,9 @@ brew install socat
 
 - [x] simple connection to the ozengine
 - [x] code feeding
+- [x] compiler output into a different buffer
 - [ ] linting
-- [ ] compiler output into a different buffer
-- [ ] more platform support
+- [ ] more platform support (windows ?)
 
 ## Contributing
 
