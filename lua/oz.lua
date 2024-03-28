@@ -1,13 +1,18 @@
 -- main module file
-local module = require("oz.module")
+local engine = require("oz.engine")
+local utils = require("oz.utils")
 
 ---@class Config
----@field opt string Your config option
 local config = {
-  opt = "Hello!",
+  opt = {
+    ozengine_path = "ozengine",
+    show_compiler_output = true,
+    linter = false,
+    keymap = "<C-r>",
+  },
 }
 
----@class MyModule
+---@class OzNvim
 local M = {}
 
 ---@type Config
@@ -16,12 +21,67 @@ M.config = config
 ---@param args Config?
 -- you can define your setup function here. Usually configurations can be merged, accepting outside params and
 -- you can also put some validation here for those.
-M.setup = function(args)
+function M.setup(args)
   M.config = vim.tbl_deep_extend("force", M.config, args or {})
 end
 
-M.hello = function()
-  return module.my_first_function(M.config.opt)
+function M.engine_path()
+  engine.path(M.config.opt.ozengine_path)
+  return M.config.opt.ozengine_path
+end
+
+---@param bufnr integer
+---@return string
+local get_buffer_text = function(bufnr)
+  local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
+  return table.concat(lines, "\n")
+end
+
+---Run an .oz buffer
+---@param bufnr integer
+function M.feed_file(bufnr)
+  local filetype = vim.api.nvim_get_option_value("filetype", {
+    buf = bufnr,
+  })
+
+  if filetype ~= "oz" then
+    return
+  end
+
+  local file_name = vim.api.nvim_buf_get_name(bufnr)
+  vim.notify(get_buffer_text(bufnr), vim.log.levels.INFO)
+end
+
+---Feed a selection into the engine
+---@param bufnr integer
+function M.feed_selection(bufnr)
+  local filetype = vim.api.nvim_get_option_value("filetype", {
+    buf = bufnr,
+  })
+
+  if filetype ~= "oz" then
+    return
+  end
+
+  local selected_text = table.concat(utils.get_visual(bufnr), "\n")
+
+  vim.notify(selected_text, vim.log.levels.INFO, {})
+  local file_name = vim.api.nvim_buf_get_name(bufnr)
+end
+
+---Start the ozengine server
+function M.start_engine()
+  engine.start(M)
+end
+
+---Shutdown the ozengine server
+function M.shutdown_engine()
+  engine.shutdown()
+end
+
+---Restart the ozengine server
+function M.restart_engine()
+  engine.restart(M)
 end
 
 return M
