@@ -32,8 +32,15 @@ Some available commands:
 
 ## Dependencies
 
-The plugin depends on the `socat` command to the ozengine. The plugin is only
-tested on linux for the moment.
+The plugin depends on the `socat` command to send code to the ozengine. 
+It's available on all major distros see [here](https://pkgs.org/download/socat)
+
+On macOS, `socat` can be installed with [brew](https://formulae.brew.sh/formula/socat):
+```zsh
+brew install socat
+```
+
+> The plugin is only tested on linux for the moment.
 
 ## TODOs
 
