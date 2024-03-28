@@ -32,7 +32,7 @@ Some available commands:
 
 ## Dependencies
 
-The plugin depends on the `socat` command to the ozengine. The plugin is only
+The plugin depends on the `socat` command to send code to the ozengine. The plugin is only
 tested on linux for the moment.
 
 ## TODOs
