@@ -2,32 +2,30 @@
 local engine = require("oz.engine")
 local utils = require("oz.utils")
 
----@class Config
-local config = {
-  opt = {
-    ozengine_path = "ozengine",
-    show_compiler_output = true,
-    linter = false,
-    keymap = "<C-r>",
-  },
+---@class Options
+local opts = {
+  ozengine_path = "ozengine",
+  show_compiler_output = true,
+  linter = false,
+  keymap = "<C-r>",
 }
 
 ---@class OzNvim
 local M = {}
 
----@type Config
-M.config = config
+---@type Options
+M.opts = opts
 
----@param args Config?
+---@param args Options?
 -- you can define your setup function here. Usually configurations can be merged, accepting outside params and
 -- you can also put some validation here for those.
 function M.setup(args)
-  M.config = vim.tbl_deep_extend("force", M.config, args or {})
+  M.opts = vim.tbl_deep_extend("force", M.opts, args or {})
 end
 
 function M.engine_path()
-  engine.path(M.config.opt.ozengine_path)
-  return M.config.opt.ozengine_path
+  engine.path(M.opts.ozengine_path)
+  return M.opts.ozengine_path
 end
 
 ---@param bufnr integer

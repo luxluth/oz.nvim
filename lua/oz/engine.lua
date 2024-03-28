@@ -37,7 +37,7 @@ end
 ---Start the ozengine server
 ---@param instance OzNvim
 function EC:start(instance)
-  local command = { instance.config.opt.ozengine_path, "x-oz://system/OPI.ozf" }
+  local command = { instance.opts.ozengine_path, "x-oz://system/OPI.ozf" }
   if self.server.pid == nil then
     self.server.pid = vim.fn.jobstart(command, {
       ---@param data string

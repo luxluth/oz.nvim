@@ -17,7 +17,7 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
       oz.restart_engine()
     end, {})
 
-    vim.keymap.set("v", oz.config.opt.keymap, function()
+    vim.keymap.set("v", oz.opts.keymap, function()
       oz.feed_selection(args.buf)
     end, { desc = "Feed the current selection into the oz engine" })
   end,
