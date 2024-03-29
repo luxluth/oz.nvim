@@ -97,12 +97,12 @@ function M.open_log()
   engine.openlogs()
 end
 
-function M.close_log()
-  engine.closelogs()
-end
-
-function M.toogle_log()
-  engine.tooglelogs()
-end
+-- function M.close_log()
+--   engine.closelogs()
+-- end
+--
+-- function M.toogle_log()
+--   engine.tooglelogs()
+-- end
 
 return M

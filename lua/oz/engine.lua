@@ -158,12 +158,12 @@ function M.openlogs()
   LogBuf:open_log()
 end
 
-function M.closelogs()
-  LogBuf:close_log()
-end
-
-function M.tooglelogs()
-  LogBuf:toogle_log()
-end
+-- function M.closelogs()
+--   LogBuf:close_log()
+-- end
+--
+-- function M.tooglelogs()
+--   LogBuf:toogle_log()
+-- end
 
 return M
