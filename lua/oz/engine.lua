@@ -80,17 +80,16 @@ function EC:start(instance)
     end
   end
 end
--- ozengine x-oz://system/OPI.ozf
 
 ---Shutdown the ozengine server
 function EC:shutdown()
   if self.compiler.active then
-    self:send({
-      character = 0,
-      data = "{Application.exit 0}",
-      filename = "",
-      line = 0,
-    })
+    -- self:send({
+    --   character = 0,
+    --   data = "{Application.exit 0}",
+    --   filename = "",
+    --   line = 0,
+    -- })
     vim.fn.jobstop(self.compiler.pid)
     self.compiler.pid = nil
     self.compiler.active = false
