@@ -93,6 +93,7 @@ function EC:shutdown()
     vim.fn.jobstop(self.compiler.pid)
     self.compiler.pid = nil
     self.compiler.active = false
+    LogBuf:reset()
   end
 
   if self.server.active then
@@ -111,6 +112,7 @@ end
 ---@param message CompilerMessage
 function EC:send(message)
   if self.compiler.active then
+    vim.notify(string.format("feed send to pid %d", self.compiler.pid), vim.log.levels.TRACE, { title = "oz.nvim" })
     vim.fn.chansend(
       self.compiler.pid,
       message.data

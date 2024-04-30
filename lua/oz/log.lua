@@ -52,6 +52,10 @@ function LogBuf:push(lines)
   self:set_buf_lines(self.content)
 end
 
+function LogBuf:reset()
+  self.content = {}
+end
+
 function LogBuf:open_log()
   if self.buf.open ~= true then
     self.buf.nr = vim.api.nvim_create_buf(true, true)
