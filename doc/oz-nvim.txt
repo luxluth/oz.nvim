@@ -1,4 +1,4 @@
-*oz-nvim.txt*          For Neovim >= 0.8.0          Last change: 2024 April 30
+*oz-nvim.txt*         For Neovim >= 0.8.0         Last change: 2025 January 24
 
 ==============================================================================
 Table of Contents                                  *oz-nvim-table-of-contents*
@@ -6,7 +6,6 @@ Table of Contents                                  *oz-nvim-table-of-contents*
 1. oz.nvim                                                   |oz-nvim-oz.nvim|
   - Configuration                              |oz-nvim-oz.nvim-configuration|
   - Commands                                        |oz-nvim-oz.nvim-commands|
-  - Dependencies                                |oz-nvim-oz.nvim-dependencies|
   - TODOs                                              |oz-nvim-oz.nvim-todos|
   - Contributing                                |oz-nvim-oz.nvim-contributing|
 2. Links                                                       |oz-nvim-links|
@@ -18,8 +17,6 @@ Table of Contents                                  *oz-nvim-table-of-contents*
 
 A neovim plugin for the oz programming language
 
-
-  It’s not a complete implementation but it can do the job for now
 
 CONFIGURATION                                  *oz-nvim-oz.nvim-configuration*
 
@@ -46,21 +43,6 @@ Some available commands:
 - `OzEngineRestart` to restart the engine
 - `OzOpenLog` to see the logs
 
-
-DEPENDENCIES                                    *oz-nvim-oz.nvim-dependencies*
-
-The plugin depends on the `socat` command to send code to the ozengine. It’s
-available on all major distros see here <https://pkgs.org/download/socat>
-
-On macOS, `socat` can be installed with brew
-<https://formulae.brew.sh/formula/socat>
-
->zsh
-    brew install socat
-<
-
-
-  Theplugin is only tested on linux for the moment.
 
 TODOS                                                  *oz-nvim-oz.nvim-todos*
 
