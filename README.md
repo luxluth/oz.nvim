@@ -5,8 +5,6 @@
 
 A neovim plugin for the oz programming language
 
-> It's not a complete implementation but it can do the job for now
-
 ## Configuration
 
 Default configuration options
@@ -30,19 +28,6 @@ Some available commands:
 - `OzFeedFile` to feed the current oz buffer to the engine
 - `OzEngineRestart` to restart the engine
 - `OzOpenLog` to see the logs
-
-## Dependencies
-
-The plugin depends on the `socat` command to send code to the ozengine.
-It's available on all major distros see [here](https://pkgs.org/download/socat)
-
-On macOS, `socat` can be installed with [brew](https://formulae.brew.sh/formula/socat):
-
-```zsh
-brew install socat
-```
-
-> The plugin is only tested on linux for the moment.
 
 ## TODOs
 
