@@ -40,7 +40,9 @@ function EC:spinsup_compiler(port)
           if read_err then
             vim.notify("ozengine server read error\n[CAUSE] " .. read_err, vim.log.levels.ERROR, { title = "oz.nvim" })
           elseif chunk then
-            LogBuf:push(vim.split(chunk, "\n", { trimempty = true }))
+            vim.schedule(function()
+              LogBuf:push(vim.split(chunk, "\n", { trimempty = true }))
+            end)
           else
             vim.notify("The ozengine server has disconnected", vim.log.levels.WARN, { title = "oz.nvim" })
             uv.close(client, function()
