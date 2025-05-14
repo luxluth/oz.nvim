@@ -1,5 +1,9 @@
 " Vim syntax file
 " Language:    Oz/Mozart (www.mozart-oz.org)
+" Maintainer:    Michael Neumann <mneumann@fantasy-coders.de>, luxluth
+" Last Change:    14/05/2025
+"
+" $Id: oz.vim,v 1.3 14/05/2025 10:13:13 luxluth Exp $
 
 if exists("b:current_syntax")
   finish
@@ -82,3 +86,4 @@ hi link ozComment Comment
 hi link ozQualifier Type
 
 let b:current_syntax = "oz"
+let &l:commentstring = '% %s'
